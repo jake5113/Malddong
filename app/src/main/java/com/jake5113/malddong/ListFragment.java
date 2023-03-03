@@ -35,18 +35,7 @@ public class ListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // TODO: 샘플링
-        items.add(new ToiletItem(R.drawable.sample, "화장실", "화장실주소"));
-        items.add(new ToiletItem(R.drawable.sample, "화장실", "화장실주소"));
-        items.add(new ToiletItem(R.drawable.sample, "화장실", "화장실주소"));
-        items.add(new ToiletItem(R.drawable.sample, "화장실", "화장실주소"));
-        items.add(new ToiletItem(R.drawable.sample, "화장실", "화장실주소"));
-        items.add(new ToiletItem(R.drawable.sample, "화장실", "화장실주소"));
-        items.add(new ToiletItem(R.drawable.sample, "화장실", "화장실주소"));
-        items.add(new ToiletItem(R.drawable.sample, "화장실", "화장실주소"));
-        items.add(new ToiletItem(R.drawable.sample, "화장실", "화장실주소"));
-        items.add(new ToiletItem(R.drawable.sample, "화장실", "화장실주소"));
-        items.add(new ToiletItem(R.drawable.sample, "화장실", "화장실주소"));
+
     }
 
 

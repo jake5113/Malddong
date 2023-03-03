@@ -17,8 +17,8 @@ public class ToiletItem {
             femaleDspsnClosetCnt, // 여성 장애인 대변기 수
             femaleChildClosetCn; // 여성 어린이 대변기 수
 
-    public ToiletItem(int img, String toiletNm, String rnAdres) {
-        this.img = img;
+    public ToiletItem(String photo, String toiletNm, String rnAdres) {
+        this.photo = photo;
         this.toiletNm = toiletNm;
         this.rnAdres = rnAdres;
     }
