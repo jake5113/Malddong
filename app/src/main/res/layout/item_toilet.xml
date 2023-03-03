@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/iv_img"
+        android:src="@drawable/sample"
+        android:scaleType="centerCrop"
+        android:layout_width="150dp"
+        android:layout_height="100dp" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:text="화장실 이름"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tv_addr"
+        android:text="화장실 주소"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+</LinearLayout>
