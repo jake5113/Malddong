@@ -11,6 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
 public class ToiletRecyclerAdapter extends RecyclerView.Adapter<ToiletRecyclerAdapter.VH> {
@@ -34,7 +36,7 @@ public class ToiletRecyclerAdapter extends RecyclerView.Adapter<ToiletRecyclerAd
     @Override
     public void onBindViewHolder(@NonNull VH holder, int position) {
         ToiletItem toiletItem = items.get(position);
-        holder.ivImg.setImageResource(toiletItem.img);
+        Glide.with(context).load(toiletItem.photo).into(holder.ivImg);
         holder.tvName.setText(toiletItem.toiletNm);
         holder.tvAddr.setText(toiletItem.rnAdres);
     }
