@@ -48,40 +48,37 @@ public class ListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        items.add(new ToiletItem("https://cdn.pixabay.com/photo/2023/02/08/07/32/vietnamese-woman-7775904__340.jpg", "toiletNmtoiletNm", "rnAdres"));
-//        items.add(new ToiletItem("https://cdn.pixabay.com/photo/2023/02/08/07/32/vietnamese-woman-7775904__340.jpg", "toiletNmtoiletNm", "rnAdres"));
-//        items.add(new ToiletItem("https://cdn.pixabay.com/photo/2023/02/08/07/32/vietnamese-woman-7775904__340.jpg", "toiletNmtoiletNm", "rnAdres"));
         // JSON 파싱
         requestQueue = Volley.newRequestQueue(getContext());
         parseJSON();
     }
 
     private void parseJSON() {
-        String url = "https://apis.data.go.kr/6510000/publicToiletService/getPublicToiletInfoList?";
+        String url = "http://apis.data.go.kr/6510000/publicToiletService/getPublicToiletInfoList";
         String key = "wj7oRO6dukW0QCaRyFLL%2FCVQB4H5WztM2mZlRr%2FAeP%2BvRUxW2nABknrxggyD7NHnLaOgARxnjnhDMYQEeCGgzA%3D%3D";
-        String urlkey = "https://apis.data.go.kr/6510000/publicToiletService/getPublicToiletInfoList?serviceKey=wj7oRO6dukW0QCaRyFLL%2FCVQB4H5WztM2mZlRr%2FAeP%2BvRUxW2nABknrxggyD7NHnLaOgARxnjnhDMYQEeCGgzA%3D%3D&numOfRows=20";
-        String sample = "https://pixabay.com/api/?key=34140372-05b90480cdafd0bfc84a860f5&image_type=photo&per_page=200";
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, sample, null,
+        String urlkey = "https://apis.data.go.kr/6510000/publicToiletService/getPublicToiletInfoList?serviceKey=wj7oRO6dukW0QCaRyFLL%2FCVQB4H5WztM2mZlRr%2FAeP%2BvRUxW2nABknrxggyD7NHnLaOgARxnjnhDMYQEeCGgzA%3D%3D&pageNo=1&numOfRows=200";
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, urlkey, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            JSONArray jsonArray = response.getJSONArray("hits");
+                            JSONObject jsonResponseObject = response.getJSONObject("response");
+                            JSONObject jsonMBodyObject = jsonResponseObject.getJSONObject("body");
+                            JSONObject jsonItemsObject = jsonMBodyObject.getJSONObject("items");
+                            JSONArray jsonArray = jsonItemsObject.getJSONArray("item");
 
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject item = jsonArray.getJSONObject(i);
-
-                                // TODO: Sample -> url 로 바꾸기.
-
-                                // sample
-                                // String creatorName = item.getString("user");
-                                 String imageUrl = item.getString("webformatURL");
-
-                                // String photo = item.getString("photo");
-                                 String toiletNm = item.getString("type");
-                                 String rnAdres = item.getString("tags");
-
-                                items.add(new ToiletItem(imageUrl, toiletNm, rnAdres));
+                                String toiletNm = item.getString("toiletNm");
+                                String rnAdres = item.getString("rnAdres");
+                                try {
+                                    if (item.getJSONArray("photo").getString(0) != null) {
+                                        String photo = item.getJSONArray("photo").getString(0);
+                                        items.add(new ToiletItem(photo, toiletNm, rnAdres));
+                                    }
+                                } catch (JSONException e) {
+                                    continue;
+                                }
                             }
                             adapter = new ToiletRecyclerAdapter(getActivity(), items);
                             recyclerView.setAdapter(adapter);
