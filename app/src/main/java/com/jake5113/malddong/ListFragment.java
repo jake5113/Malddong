@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -30,6 +31,7 @@ public class ListFragment extends Fragment {
     RecyclerView recyclerView;
     ToiletRecyclerAdapter adapter;
     RequestQueue requestQueue;
+    ImageView ivFavorite;
 
     @Override
 
@@ -41,6 +43,7 @@ public class ListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ivFavorite = view.findViewById(R.id.iv_favorite);
         recyclerView = view.findViewById(R.id.recyclerview);
     }
 

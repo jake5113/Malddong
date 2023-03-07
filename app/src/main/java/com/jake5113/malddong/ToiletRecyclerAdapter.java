@@ -20,6 +20,7 @@ public class ToiletRecyclerAdapter extends RecyclerView.Adapter<ToiletRecyclerAd
     Context context;
     ArrayList<ToiletItem> items;
 
+
     public ToiletRecyclerAdapter(Context context, ArrayList<ToiletItem> items) {
         this.context = context;
         this.items = items;
@@ -39,21 +40,43 @@ public class ToiletRecyclerAdapter extends RecyclerView.Adapter<ToiletRecyclerAd
         Glide.with(context).load(toiletItem.photo).into(holder.ivImg);
         holder.tvName.setText(toiletItem.toiletNm);
         holder.tvAddr.setText(toiletItem.rnAdres);
+
+        if (toiletItem.like) {
+            holder.ivFavorite.setImageResource(R.drawable.baseline_favorite_24);
+        } else {
+            holder.ivFavorite.setImageResource(R.drawable.baseline_favorite_border_24);
+        }
+
+        holder.ivFavorite.setOnClickListener(v -> {
+            if (toiletItem.like) {
+                // 좋아요 해제
+                holder.ivFavorite.setImageResource(R.drawable.baseline_favorite_border_24);
+                toiletItem.like = !toiletItem.like;
+            } else {
+                // 좋아요 설정
+                holder.ivFavorite.setImageResource(R.drawable.baseline_favorite_24);
+                toiletItem.like = !toiletItem.like;
+            }
+        });
     }
 
     @Override
-    public int getItemCount() {return items.size();}
+    public int getItemCount() {
+        return items.size();
+    }
 
     class VH extends RecyclerView.ViewHolder {
 
         TextView tvName, tvAddr;
         ImageView ivImg;
+        ImageView ivFavorite;
 
         public VH(@NonNull View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tv_name);
             tvAddr = itemView.findViewById(R.id.tv_addr);
             ivImg = itemView.findViewById(R.id.iv_img);
+            ivFavorite = itemView.findViewById(R.id.iv_favorite);
         }
     }
 }

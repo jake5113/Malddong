@@ -25,10 +25,10 @@
             android:text="LIST" />
 
         <com.google.android.material.tabs.TabItem
-            android:id="@+id/tab_stored"
+            android:id="@+id/tab_favorite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="STORED" />
+            android:text="FAVORITE" />
 
     </com.google.android.material.tabs.TabLayout>
 

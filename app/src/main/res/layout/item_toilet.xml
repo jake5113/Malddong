@@ -1,28 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:padding="4dp"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="4dp">
 
     <ImageView
         android:id="@+id/iv_img"
         android:layout_width="180dp"
         android:layout_height="120dp"
         android:scaleType="centerCrop"
-        />
+        android:src="@drawable/sample" />
+
+    <ImageView
+        android:layout_margin="4dp"
+        android:id="@+id/iv_favorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@id/iv_img"
+        android:src="@drawable/baseline_favorite_border_24" />
 
     <TextView
         android:id="@+id/tv_name"
-        android:text="화장실 이름"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_img"
+        android:text="화장실 이름"
+        android:textColor="@color/black"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tv_addr"
-        android:text="화장실 주소"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_name"
+        android:text="화장실 주소" />
 
 
-</LinearLayout>
+</RelativeLayout>

@@ -1,6 +1,7 @@
 package com.jake5113.malddong;
 
 public class ToiletItem {
+    boolean like = false; // 좋아요 클릭 값 저장
     String photoYn, photo; // 사진 유무, 사진
     String toiletNm, opnTimeInfo; // 화장실 명, 개방 시간 정보
     String rnAdres, lnmAdres; // 도로명 주소, 지번 주소
