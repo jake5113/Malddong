@@ -12,7 +12,7 @@ import com.google.android.material.tabs.TabLayout;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
-    Fragment listFragment, mapFragment;
+    Fragment listFragment, mapFragment, favoriteFragment;
     TabLayout tabLayout;
 
     @Override
@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
         listFragment = new ListFragment();
         mapFragment = new MapFragment();
+        favoriteFragment = new FavoriteFragment();
 
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_view, listFragment).commit();
 
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
                 else if (pos == 1)
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_view, listFragment).commit();
                 else if (pos == 2)
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_view, listFragment).commit(); // 찜화면 구현하기
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_view, favoriteFragment).commit();
             }
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {

@@ -1,8 +1,6 @@
 package com.jake5113.malddong;
 
-import android.content.ClipData;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,20 +14,18 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
-public class ToiletRecyclerAdapter extends RecyclerView.Adapter<ToiletRecyclerAdapter.VH> {
+public class FavoriteRecyclerAdapter extends RecyclerView.Adapter<FavoriteRecyclerAdapter.VH> {
 
     Context context;
     ArrayList<ToiletItem> items;
 
-
-    public ToiletRecyclerAdapter(Context context, ArrayList<ToiletItem> items) {
+    public FavoriteRecyclerAdapter(Context context, ArrayList<ToiletItem> items) {
         this.context = context;
         this.items = items;
     }
 
     @NonNull
     @Override
-
     public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(context).inflate(R.layout.item_toilet, parent, false);
         return new VH(itemView);
@@ -41,49 +37,12 @@ public class ToiletRecyclerAdapter extends RecyclerView.Adapter<ToiletRecyclerAd
         Glide.with(context).load(toiletItem.photo).into(holder.ivImg);
         holder.tvName.setText(toiletItem.toiletNm);
         holder.tvAddr.setText(toiletItem.rnAdres);
-
-        if (toiletItem.like) {
-            holder.ivFavorite.setImageResource(R.drawable.baseline_favorite_24);
-        } else {
-            holder.ivFavorite.setImageResource(R.drawable.baseline_favorite_border_24);
-        }
-
-        holder.ivFavorite.setOnClickListener(v -> {
-            if (toiletItem.like) {
-                // 좋아요 해제
-                holder.ivFavorite.setImageResource(R.drawable.baseline_favorite_border_24);
-
-                // SharedPreferences 데이터 삭제하기
-
-
-
-                toiletItem.like = !toiletItem.like;
-            } else {
-                // 좋아요 설정
-                holder.ivFavorite.setImageResource(R.drawable.baseline_favorite_24);
-
-                // SharedPreferences 로 저장하기
-                SharedPreferences pref = context.getSharedPreferences("Favorite", Context.MODE_PRIVATE);
-
-                // 저장작업 시작
-                SharedPreferences.Editor editor = pref.edit();
-                editor.putBoolean("like", toiletItem.like);
-                editor.putString("photo", toiletItem.photo);
-                editor.putString("toiletNm", toiletItem.toiletNm);
-                editor.putString("rnAdres", toiletItem.rnAdres);
-
-                editor.apply();// commit()?
-
-                toiletItem.like = !toiletItem.like;
-            }
-        });
     }
 
     @Override
     public int getItemCount() {
         return items.size();
     }
-
     class VH extends RecyclerView.ViewHolder {
 
         TextView tvName, tvAddr;
@@ -96,6 +55,7 @@ public class ToiletRecyclerAdapter extends RecyclerView.Adapter<ToiletRecyclerAd
             tvAddr = itemView.findViewById(R.id.tv_addr);
             ivImg = itemView.findViewById(R.id.iv_img);
             ivFavorite = itemView.findViewById(R.id.iv_favorite);
+
         }
     }
 }
