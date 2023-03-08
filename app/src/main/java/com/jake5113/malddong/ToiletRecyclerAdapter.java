@@ -2,7 +2,9 @@ package com.jake5113.malddong;
 
 import android.content.ClipData;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,24 +57,30 @@ public class ToiletRecyclerAdapter extends RecyclerView.Adapter<ToiletRecyclerAd
 
                 // SharedPreferences 데이터 삭제하기
 
-
-
                 toiletItem.like = !toiletItem.like;
             } else {
                 // 좋아요 설정
                 holder.ivFavorite.setImageResource(R.drawable.baseline_favorite_24);
 
-                // SharedPreferences 로 저장하기
-                SharedPreferences pref = context.getSharedPreferences("Favorite", Context.MODE_PRIVATE);
+                //TODO: Arraylist 값 전달
+//                FavoriteFragment favoriteFragment = new FavoriteFragment();
+//                favoriteFragment.addFavorite(toiletItem.photo,toiletItem.toiletNm,toiletItem.rnAdres);
 
-                // 저장작업 시작
-                SharedPreferences.Editor editor = pref.edit();
-                editor.putBoolean("like", toiletItem.like);
-                editor.putString("photo", toiletItem.photo);
-                editor.putString("toiletNm", toiletItem.toiletNm);
-                editor.putString("rnAdres", toiletItem.rnAdres);
+                Intent intent = new Intent();
+                intent.putExtra("photo", toiletItem.photo);
+                intent.putExtra("toiletNm", toiletItem.toiletNm);
+                intent.putExtra("rnAdres", toiletItem.rnAdres);
 
-                editor.apply();// commit()?
+
+                // TODO: SharedPreferences 로 저장하기 // 실패한 이유 : 값이 대체된다..!
+//                SharedPreferences pref = context.getSharedPreferences("Favorite", Context.MODE_PRIVATE);
+//                // 저장작업 시작
+//                SharedPreferences.Editor editor = pref.edit();
+//                editor.putBoolean("like", toiletItem.like);
+//                editor.putString("photo", toiletItem.photo);
+//                editor.putString("toiletNm", toiletItem.toiletNm);
+//                editor.putString("rnAdres", toiletItem.rnAdres);
+//                editor.apply();// commit()?
 
                 toiletItem.like = !toiletItem.like;
             }

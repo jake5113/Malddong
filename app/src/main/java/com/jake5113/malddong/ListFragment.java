@@ -24,6 +24,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ListFragment extends Fragment {
     ArrayList<ToiletItem> items = new ArrayList<>();
@@ -42,6 +43,7 @@ public class ListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         ivFavorite = view.findViewById(R.id.iv_favorite);
         recyclerView = view.findViewById(R.id.recyclerview_list);
     }
@@ -51,15 +53,17 @@ public class ListFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         // JSON 파싱
-        requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue = Volley.newRequestQueue(requireContext());
+
+        // Fragment가 onCreate 될 때마다 파싱이 되는 문제점.
         parseJSON();
     }
+
 
     private void parseJSON() {
         String url = "http://apis.data.go.kr/6510000/publicToiletService/getPublicToiletInfoList";
         String key = "wj7oRO6dukW0QCaRyFLL%2FCVQB4H5WztM2mZlRr%2FAeP%2BvRUxW2nABknrxggyD7NHnLaOgARxnjnhDMYQEeCGgzA%3D%3D";
-        String urlkey = "https://apis.data.go.kr/6510000/publicToiletService/getPublicToiletInfoList?serviceKey=wj7oRO6dukW0QCaRyFLL%2FCVQB4H5WztM2mZlRr%2FAeP%2BvRUxW2nABknrxggyD7NHnLaOgARxnjnhDMYQEeCGgzA%3D%3D&pageNo=1&numOfRows=200";
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, urlkey, null,
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url + "?serviceKey=" + key + "&pageNo=1&numOfRows=200", null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -69,17 +73,19 @@ public class ListFragment extends Fragment {
                             JSONObject jsonItemsObject = jsonMBodyObject.getJSONObject("items");
                             JSONArray jsonArray = jsonItemsObject.getJSONArray("item");
 
-                            for (int i = 0; i < jsonArray.length(); i++) {
-                                JSONObject item = jsonArray.getJSONObject(i);
-                                String toiletNm = item.getString("toiletNm");
-                                String rnAdres = item.getString("rnAdres");
-                                try {
-                                    if (item.getJSONArray("photo").getString(0) != null) {
-                                        String photo = item.getJSONArray("photo").getString(0);
-                                        items.add(new ToiletItem(photo, toiletNm, rnAdres));
+                            if (items.size() == 0) { //괜찮은 코드인가?
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject item = jsonArray.getJSONObject(i);
+                                    String toiletNm = item.getString("toiletNm");
+                                    String rnAdres = item.getString("rnAdres");
+                                    try {
+                                        if (item.getJSONArray("photo").getString(0) != null) {
+                                            String photo = item.getJSONArray("photo").getString(0);
+                                            items.add(new ToiletItem(photo, toiletNm, rnAdres));
+                                        }
+                                    } catch (JSONException e) {
+                                        continue;
                                     }
-                                } catch (JSONException e) {
-                                    continue;
                                 }
                             }
                             adapter = new ToiletRecyclerAdapter(getActivity(), items);

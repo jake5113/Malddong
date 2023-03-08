@@ -26,7 +26,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/iv_img"
         android:text="화장실 이름"
-        android:textColor="@color/black"
         android:textStyle="bold" />
 
     <TextView
