@@ -4,6 +4,7 @@ import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -52,6 +53,8 @@ public class ToiletRecyclerAdapter extends RecyclerView.Adapter<ToiletRecyclerAd
         holder.tvName.setText(toiletItem.toiletNm);
         holder.tvAddr.setText(toiletItem.rnAdres);
 
+        toiletItem.like = checkIsLike(toiletItem.toiletNm, toiletItem.like);
+
         if (toiletItem.like) {
             holder.ivFavorite.setImageResource(R.drawable.baseline_favorite_24);
         } else {
@@ -98,5 +101,21 @@ public class ToiletRecyclerAdapter extends RecyclerView.Adapter<ToiletRecyclerAd
             ivImg = itemView.findViewById(R.id.iv_img);
             ivFavorite = itemView.findViewById(R.id.iv_favorite);
         }
+    }
+
+    private boolean checkIsLike(String name, boolean likeCheck){
+        // DB에서 불러오기
+        Cursor cursor = database.rawQuery("SELECT * FROM toilet", null);
+        if (cursor == null) return false;
+        int cnt = cursor.getCount();
+        cursor.moveToFirst();
+
+        for (int i = 0; i < cnt; i++) {
+            if(name.equals(cursor.getString(2))){
+                return true;
+            }
+            cursor.moveToNext();
+        }
+        return false;
     }
 }

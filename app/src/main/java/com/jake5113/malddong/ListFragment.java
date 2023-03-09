@@ -65,7 +65,6 @@ public class ListFragment extends Fragment {
 
         // Fragment가 onCreate 될 때마다 파싱이 되는 문제점.
         parseJSON();
-
     }
 
     private void parseJSON() {
