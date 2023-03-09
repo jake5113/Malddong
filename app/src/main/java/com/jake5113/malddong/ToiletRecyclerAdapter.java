@@ -4,6 +4,7 @@ import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ public class ToiletRecyclerAdapter extends RecyclerView.Adapter<ToiletRecyclerAd
 
     Context context;
     ArrayList<ToiletItem> items;
+    SQLiteDatabase database;
 
 
     public ToiletRecyclerAdapter(Context context, ArrayList<ToiletItem> items) {
@@ -39,6 +41,13 @@ public class ToiletRecyclerAdapter extends RecyclerView.Adapter<ToiletRecyclerAd
 
     @Override
     public void onBindViewHolder(@NonNull VH holder, int position) {
+
+        //SQLite
+        //TODO: DB 오류 발생!
+        database = SQLiteDatabase.openOrCreateDatabase("favorite", null);
+        database.execSQL("CREATE TABLE IF NOT EXISTS toilet(num INTEGER PRIMARY KEY AUTOINCREMENT, photo TEXT, toiletNm TEXT, rnAdres TEXT)");
+
+
         ToiletItem toiletItem = items.get(position);
         Glide.with(context).load(toiletItem.photo).into(holder.ivImg);
         holder.tvName.setText(toiletItem.toiletNm);
@@ -54,6 +63,8 @@ public class ToiletRecyclerAdapter extends RecyclerView.Adapter<ToiletRecyclerAd
             if (toiletItem.like) {
                 // 좋아요 해제
                 holder.ivFavorite.setImageResource(R.drawable.baseline_favorite_border_24);
+                //SQLite
+                //database.execSQL("DELETE FROM toilet WHERE toiletNm = " + toiletItem.toiletNm);
 
                 // SharedPreferences 데이터 삭제하기
 
@@ -62,14 +73,18 @@ public class ToiletRecyclerAdapter extends RecyclerView.Adapter<ToiletRecyclerAd
                 // 좋아요 설정
                 holder.ivFavorite.setImageResource(R.drawable.baseline_favorite_24);
 
+                //DB에 저장
+                //database.execSQL("INSERT INTO toilet (photo, toiletNm, rnAdres) VALUES ('" + toiletItem.photo + "','" + toiletItem.toiletNm + "','" + toiletItem.rnAdres + "')");
+
+                //TEST
                 //TODO: Arraylist 값 전달
 //                FavoriteFragment favoriteFragment = new FavoriteFragment();
 //                favoriteFragment.addFavorite(toiletItem.photo,toiletItem.toiletNm,toiletItem.rnAdres);
 
-                Intent intent = new Intent();
-                intent.putExtra("photo", toiletItem.photo);
-                intent.putExtra("toiletNm", toiletItem.toiletNm);
-                intent.putExtra("rnAdres", toiletItem.rnAdres);
+//                Intent intent = new Intent();
+//                intent.putExtra("photo", toiletItem.photo);
+//                intent.putExtra("toiletNm", toiletItem.toiletNm);
+//                intent.putExtra("rnAdres", toiletItem.rnAdres);
 
 
                 // TODO: SharedPreferences 로 저장하기 // 실패한 이유 : 값이 대체된다..!

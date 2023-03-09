@@ -24,10 +24,13 @@ public class MainActivity extends AppCompatActivity {
         mapFragment = new MapFragment();
         favoriteFragment = new FavoriteFragment();
 
-        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_view, listFragment).commit();
-
         tabLayout = findViewById(R.id.tablayout);
+
+        //TODO: 스마트폰 회전 시 View가 재생성되면서 다시 호출되는 문제 해결해야 함.
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_view, listFragment).commit();
         Objects.requireNonNull(tabLayout.getTabAt(1)).select();
+
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -40,9 +43,12 @@ public class MainActivity extends AppCompatActivity {
                 else if (pos == 2)
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_view, favoriteFragment).commit();
             }
+
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
+
             }
+
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
             }

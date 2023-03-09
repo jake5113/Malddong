@@ -33,6 +33,7 @@ public class ListFragment extends Fragment {
     RequestQueue requestQueue;
     ImageView ivFavorite;
 
+
     @Override
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -88,6 +89,7 @@ public class ListFragment extends Fragment {
                                     }
                                 }
                             }
+
                             adapter = new ToiletRecyclerAdapter(getActivity(), items);
                             recyclerView.setAdapter(adapter);
                         } catch (JSONException e) {
