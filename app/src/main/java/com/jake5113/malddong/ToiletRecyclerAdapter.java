@@ -53,6 +53,7 @@ public class ToiletRecyclerAdapter extends RecyclerView.Adapter<ToiletRecyclerAd
         holder.tvName.setText(toiletItem.toiletNm);
         holder.tvAddr.setText(toiletItem.rnAdres);
 
+        // 하트 눌러져 있는거 확인!!
         toiletItem.like = checkIsLike(toiletItem.toiletNm, toiletItem.like);
 
         if (toiletItem.like) {
@@ -70,7 +71,6 @@ public class ToiletRecyclerAdapter extends RecyclerView.Adapter<ToiletRecyclerAd
                 database.execSQL("DELETE FROM toilet WHERE toiletNm ="+ "'" + toiletItem.toiletNm+ "'");
 
                 toiletItem.like = !toiletItem.like;
-
             } else {
                 // 좋아요 설정
                 holder.ivFavorite.setImageResource(R.drawable.baseline_favorite_24);

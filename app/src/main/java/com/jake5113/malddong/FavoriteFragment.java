@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -26,17 +27,24 @@ public class FavoriteFragment extends Fragment {
     String rnAdres;
     RecyclerView recyclerView;
     FavoriteRecyclerAdapter adapter;
-    ImageView ivFavorite;
+    ImageView ivFavLoading;
+    TextView tvFavLoading;
     SQLiteDatabase database;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ivFavorite = view.findViewById(R.id.iv_favorite);
+        tvFavLoading = view.findViewById(R.id.tv_fav_loading);
+        ivFavLoading = view.findViewById(R.id.iv_fav_loading);
         recyclerView = view.findViewById(R.id.recyclerview_favorite);
         adapter = new FavoriteRecyclerAdapter(getActivity(), favoriteItmes);
         recyclerView.setAdapter(adapter);
+
+        if (favoriteItmes.size() != 0) {
+            ivFavLoading.setVisibility(View.GONE);
+            tvFavLoading.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -46,8 +54,8 @@ public class FavoriteFragment extends Fragment {
         getData();
     }
 
-    private void getData(){
-        database = getActivity().openOrCreateDatabase("favorite", Context.MODE_PRIVATE,null);
+    private void getData() {
+        database = getActivity().openOrCreateDatabase("favorite", Context.MODE_PRIVATE, null);
         database.execSQL("CREATE TABLE IF NOT EXISTS toilet(num INTEGER PRIMARY KEY AUTOINCREMENT, photo TEXT, toiletNm TEXT, rnAdres TEXT)");
 
         Cursor cursor = database.rawQuery("SELECT * FROM toilet", null);
@@ -58,7 +66,7 @@ public class FavoriteFragment extends Fragment {
         cursor.moveToFirst();
 
         //TODO 질문하기!!! 매우 안좋은 코드같다고 생각됨.
-        favoriteItmes= new ArrayList<>();
+        favoriteItmes = new ArrayList<>();
 
         for (int i = 0; i < cnt; i++) {
             photo = cursor.getString(1);

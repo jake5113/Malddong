@@ -1,6 +1,7 @@
 package com.jake5113.malddong;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -18,10 +21,15 @@ public class FavoriteRecyclerAdapter extends RecyclerView.Adapter<FavoriteRecycl
 
     Context context;
     ArrayList<ToiletItem> items;
+    SQLiteDatabase database;
 
     public FavoriteRecyclerAdapter(Context context, ArrayList<ToiletItem> items) {
         this.context = context;
         this.items = items;
+
+        // TODO : 데이터베이스 너무 중복되는 코드가 많음. 수정 필요.
+        database = context.openOrCreateDatabase("favorite", Context.MODE_PRIVATE, null);
+        database.execSQL("CREATE TABLE IF NOT EXISTS toilet(num INTEGER PRIMARY KEY AUTOINCREMENT, photo TEXT, toiletNm TEXT, rnAdres TEXT)");
     }
 
     @NonNull
@@ -40,12 +48,20 @@ public class FavoriteRecyclerAdapter extends RecyclerView.Adapter<FavoriteRecycl
 
         // 수정 필요한 코드 - DB값 활용해야 함.
         holder.ivFavorite.setImageResource(R.drawable.baseline_favorite_24);
+
+        holder.ivFavorite.setOnClickListener(v -> {
+            database.execSQL("DELETE FROM toilet WHERE toiletNm =" + "'" + toiletItem.toiletNm + "'");
+            // notify??? 흠...
+            //TODO: Fragment refresh 가 필요함!
+
+        });
     }
 
     @Override
     public int getItemCount() {
         return items.size();
     }
+
     class VH extends RecyclerView.ViewHolder {
         TextView tvName, tvAddr;
         ImageView ivImg;
