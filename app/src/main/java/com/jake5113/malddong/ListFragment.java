@@ -1,5 +1,6 @@
 package com.jake5113.malddong;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -31,35 +32,41 @@ public class ListFragment extends Fragment {
     RecyclerView recyclerView;
     ToiletRecyclerAdapter adapter;
     RequestQueue requestQueue;
-    ImageView ivFavorite;
+    ImageView ivFavorite, ivLoading;
 
 
     @Override
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         return inflater.inflate(R.layout.fragment_list, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         ivFavorite = view.findViewById(R.id.iv_favorite);
         recyclerView = view.findViewById(R.id.recyclerview_list);
+        ivLoading = view.findViewById(R.id.iv_loading);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ivLoading.setVisibility(View.GONE);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         // JSON 파싱
         requestQueue = Volley.newRequestQueue(requireContext());
 
         // Fragment가 onCreate 될 때마다 파싱이 되는 문제점.
         parseJSON();
-    }
 
+    }
 
     private void parseJSON() {
         String url = "http://apis.data.go.kr/6510000/publicToiletService/getPublicToiletInfoList";
@@ -89,7 +96,6 @@ public class ListFragment extends Fragment {
                                     }
                                 }
                             }
-
                             adapter = new ToiletRecyclerAdapter(getActivity(), items);
                             recyclerView.setAdapter(adapter);
                         } catch (JSONException e) {

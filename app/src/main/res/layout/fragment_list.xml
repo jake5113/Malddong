@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ListFragment">
+
+<androidx.recyclerview.widget.RecyclerView
     android:id="@+id/recyclerview_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,8 +15,14 @@
     android:orientation="vertical"
     android:padding="10dp"
     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-    app:spanCount="2"
-    tools:context=".ListFragment">
-
-
+    app:spanCount="2">
 </androidx.recyclerview.widget.RecyclerView>
+
+    <ImageView
+        android:id="@+id/iv_loading"
+        android:src="@drawable/sample"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

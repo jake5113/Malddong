@@ -37,6 +37,9 @@ public class FavoriteRecyclerAdapter extends RecyclerView.Adapter<FavoriteRecycl
         Glide.with(context).load(toiletItem.photo).into(holder.ivImg);
         holder.tvName.setText(toiletItem.toiletNm);
         holder.tvAddr.setText(toiletItem.rnAdres);
+
+        // 수정 필요한 코드 - DB값 활용해야 함.
+        holder.ivFavorite.setImageResource(R.drawable.baseline_favorite_24);
     }
 
     @Override
@@ -44,7 +47,6 @@ public class FavoriteRecyclerAdapter extends RecyclerView.Adapter<FavoriteRecycl
         return items.size();
     }
     class VH extends RecyclerView.ViewHolder {
-
         TextView tvName, tvAddr;
         ImageView ivImg;
         ImageView ivFavorite;

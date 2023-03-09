@@ -29,6 +29,8 @@ public class ToiletRecyclerAdapter extends RecyclerView.Adapter<ToiletRecyclerAd
     public ToiletRecyclerAdapter(Context context, ArrayList<ToiletItem> items) {
         this.context = context;
         this.items = items;
+        database = context.openOrCreateDatabase("favorite", Context.MODE_PRIVATE,null);
+        database.execSQL("CREATE TABLE IF NOT EXISTS toilet(num INTEGER PRIMARY KEY AUTOINCREMENT, photo TEXT, toiletNm TEXT, rnAdres TEXT)");
     }
 
     @NonNull
@@ -44,9 +46,6 @@ public class ToiletRecyclerAdapter extends RecyclerView.Adapter<ToiletRecyclerAd
 
         //SQLite
         //TODO: DB 오류 발생!
-        database = SQLiteDatabase.openOrCreateDatabase("favorite", null);
-        database.execSQL("CREATE TABLE IF NOT EXISTS toilet(num INTEGER PRIMARY KEY AUTOINCREMENT, photo TEXT, toiletNm TEXT, rnAdres TEXT)");
-
 
         ToiletItem toiletItem = items.get(position);
         Glide.with(context).load(toiletItem.photo).into(holder.ivImg);
@@ -63,39 +62,18 @@ public class ToiletRecyclerAdapter extends RecyclerView.Adapter<ToiletRecyclerAd
             if (toiletItem.like) {
                 // 좋아요 해제
                 holder.ivFavorite.setImageResource(R.drawable.baseline_favorite_border_24);
-                //SQLite
-                //database.execSQL("DELETE FROM toilet WHERE toiletNm = " + toiletItem.toiletNm);
 
-                // SharedPreferences 데이터 삭제하기
+                //SQLite
+                database.execSQL("DELETE FROM toilet WHERE toiletNm ="+ "'" + toiletItem.toiletNm+ "'");
 
                 toiletItem.like = !toiletItem.like;
+
             } else {
                 // 좋아요 설정
                 holder.ivFavorite.setImageResource(R.drawable.baseline_favorite_24);
 
                 //DB에 저장
-                //database.execSQL("INSERT INTO toilet (photo, toiletNm, rnAdres) VALUES ('" + toiletItem.photo + "','" + toiletItem.toiletNm + "','" + toiletItem.rnAdres + "')");
-
-                //TEST
-                //TODO: Arraylist 값 전달
-//                FavoriteFragment favoriteFragment = new FavoriteFragment();
-//                favoriteFragment.addFavorite(toiletItem.photo,toiletItem.toiletNm,toiletItem.rnAdres);
-
-//                Intent intent = new Intent();
-//                intent.putExtra("photo", toiletItem.photo);
-//                intent.putExtra("toiletNm", toiletItem.toiletNm);
-//                intent.putExtra("rnAdres", toiletItem.rnAdres);
-
-
-                // TODO: SharedPreferences 로 저장하기 // 실패한 이유 : 값이 대체된다..!
-//                SharedPreferences pref = context.getSharedPreferences("Favorite", Context.MODE_PRIVATE);
-//                // 저장작업 시작
-//                SharedPreferences.Editor editor = pref.edit();
-//                editor.putBoolean("like", toiletItem.like);
-//                editor.putString("photo", toiletItem.photo);
-//                editor.putString("toiletNm", toiletItem.toiletNm);
-//                editor.putString("rnAdres", toiletItem.rnAdres);
-//                editor.apply();// commit()?
+                database.execSQL("INSERT INTO toilet (photo, toiletNm, rnAdres) VALUES ('" + toiletItem.photo + "','" + toiletItem.toiletNm + "','" + toiletItem.rnAdres + "')");
 
                 toiletItem.like = !toiletItem.like;
             }

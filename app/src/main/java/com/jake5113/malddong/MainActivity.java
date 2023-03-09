@@ -3,6 +3,7 @@ package com.jake5113.malddong;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.SurfaceControl;
 
@@ -14,11 +15,11 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity {
     Fragment listFragment, mapFragment, favoriteFragment;
     TabLayout tabLayout;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         listFragment = new ListFragment();
         mapFragment = new MapFragment();

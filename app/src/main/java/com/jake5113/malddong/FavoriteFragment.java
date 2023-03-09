@@ -1,8 +1,7 @@
 package com.jake5113.malddong;
 
+
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -20,7 +19,7 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 
 public class FavoriteFragment extends Fragment {
-    ArrayList<ToiletItem> favoriteItmes = new ArrayList<>();
+    ArrayList<ToiletItem> favoriteItmes;
     boolean like;
     String photo;
     String toiletNm;
@@ -29,14 +28,6 @@ public class FavoriteFragment extends Fragment {
     FavoriteRecyclerAdapter adapter;
     ImageView ivFavorite;
     SQLiteDatabase database;
-
-    public void addFavorite(String photo, String toiletNm, String rnAdres) {
-        favoriteItmes.add(new ToiletItem(photo, toiletNm, rnAdres));
-    }
-
-    public void removeFavorite() {
-
-    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -52,26 +43,22 @@ public class FavoriteFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //        Intent intent = new Intent();
-//        if (intent.hasExtra("photo")) {
-//            photo = intent.getStringExtra("photo");
-//            toiletNm = intent.getStringExtra("toiletNm");
-//            rnAdres = intent.getStringExtra("rnAdres");
-//            favoriteItmes.add(new ToiletItem(photo, toiletNm, rnAdres));
-//        }
-//        SharedPreferences pref = getContext().getSharedPreferences("Favorite", Context.MODE_PRIVATE);
-//
-//        like = pref.getBoolean("like", false);
-//        photo = pref.getString("photo", " ");
-//        toiletNm = pref.getString("toiletNm", " ");
-//        rnAdres = pref.getString("rnAdres", " ");
-//        favoriteItmes.add(new ToiletItem(photo, toiletNm, rnAdres));
-        database = SQLiteDatabase.openOrCreateDatabase("favorite", null);
+        getData();
+    }
+
+    private void getData(){
+        database = getActivity().openOrCreateDatabase("favorite", Context.MODE_PRIVATE,null);
+        database.execSQL("CREATE TABLE IF NOT EXISTS toilet(num INTEGER PRIMARY KEY AUTOINCREMENT, photo TEXT, toiletNm TEXT, rnAdres TEXT)");
+
         Cursor cursor = database.rawQuery("SELECT * FROM toilet", null);
+
         if (cursor == null) return;
 
         int cnt = cursor.getCount();
         cursor.moveToFirst();
+
+        //TODO 질문하기!!! 매우 안좋은 코드같다고 생각됨.
+        favoriteItmes= new ArrayList<>();
 
         for (int i = 0; i < cnt; i++) {
             photo = cursor.getString(1);
@@ -82,6 +69,7 @@ public class FavoriteFragment extends Fragment {
             cursor.moveToNext();
         }
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
