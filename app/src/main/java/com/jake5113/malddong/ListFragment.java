@@ -49,6 +49,7 @@ public class ListFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerview_list);
         ivLoading = view.findViewById(R.id.iv_loading);
 
+        //TODO : 이 부분 해결하기
         adapter = new ToiletRecyclerAdapter(getActivity(), items);
         recyclerView.setAdapter(adapter);
     }
