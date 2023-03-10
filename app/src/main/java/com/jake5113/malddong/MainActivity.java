@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.tablayout);
 
         //TODO: 스마트폰 회전 시 View가 재생성되면서 다시 호출되는 문제 해결해야 함.
-
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_view, listFragment).commit();
         Objects.requireNonNull(tabLayout.getTabAt(1)).select();
 
