@@ -6,8 +6,10 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,9 +52,12 @@ public class ListFragment extends Fragment {
         ivLoading = view.findViewById(R.id.iv_loading);
 
         //TODO : 이 부분 해결하기
-        adapter = new ToiletRecyclerAdapter(getActivity(), items);
+        adapter = new ToiletRecyclerAdapter(getContext(), items);
         recyclerView.setAdapter(adapter);
+
+        Log.i("LISTFRAGMENT", "onViewCreated");
     }
+
 
     @Override
     public void onResume() {
@@ -63,6 +68,7 @@ public class ListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.i("LISTFRAGMENT", "onCreate");
 
     }
 }
