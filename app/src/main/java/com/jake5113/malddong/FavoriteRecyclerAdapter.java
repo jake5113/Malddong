@@ -22,10 +22,12 @@ public class FavoriteRecyclerAdapter extends RecyclerView.Adapter<FavoriteRecycl
     Context context;
     ArrayList<ToiletItem> items;
     SQLiteDatabase database;
+    FavoriteFragment favoriteFragment;
 
-    public FavoriteRecyclerAdapter(Context context, ArrayList<ToiletItem> items) {
+    public FavoriteRecyclerAdapter(Context context, ArrayList<ToiletItem> items, FavoriteFragment favoriteFragment) {
         this.context = context;
         this.items = items;
+        this.favoriteFragment = favoriteFragment;
 
         // TODO : 데이터베이스 너무 중복되는 코드가 많음. 수정 필요.
         database = context.openOrCreateDatabase("favorite", Context.MODE_PRIVATE, null);
@@ -51,9 +53,15 @@ public class FavoriteRecyclerAdapter extends RecyclerView.Adapter<FavoriteRecycl
 
         holder.ivFavorite.setOnClickListener(v -> {
             database.execSQL("DELETE FROM toilet WHERE toiletNm =" + "'" + toiletItem.toiletNm + "'");
+            items.remove(toiletItem);
             // notify??? 흠...
             //TODO: Fragment refresh 가 필요함!
+            favoriteFragment.adapter.notifyDataSetChanged();
 
+            if (favoriteFragment.favoriteItmes.size() == 0) {
+                favoriteFragment.ivFavLoading.setVisibility(View.VISIBLE);
+                favoriteFragment.tvFavLoading.setVisibility(View.VISIBLE);
+            }
         });
     }
 
@@ -73,7 +81,6 @@ public class FavoriteRecyclerAdapter extends RecyclerView.Adapter<FavoriteRecycl
             tvAddr = itemView.findViewById(R.id.tv_addr);
             ivImg = itemView.findViewById(R.id.iv_img);
             ivFavorite = itemView.findViewById(R.id.iv_favorite);
-
         }
     }
 }

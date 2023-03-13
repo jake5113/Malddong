@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -45,9 +46,6 @@ public class ToiletRecyclerAdapter extends RecyclerView.Adapter<ToiletRecyclerAd
     @Override
     public void onBindViewHolder(@NonNull VH holder, int position) {
 
-        //SQLite
-        //TODO: DB 오류 발생!
-
         ToiletItem toiletItem = items.get(position);
         Glide.with(context).load(toiletItem.photo).into(holder.ivImg);
         holder.tvName.setText(toiletItem.toiletNm);
@@ -55,7 +53,6 @@ public class ToiletRecyclerAdapter extends RecyclerView.Adapter<ToiletRecyclerAd
 
         // 하트 눌러져 있는거 확인!!
         toiletItem.like = checkIsLike(toiletItem.toiletNm, toiletItem.like);
-
         if (toiletItem.like) {
             holder.ivFavorite.setImageResource(R.drawable.baseline_favorite_24);
         } else {
@@ -80,6 +77,18 @@ public class ToiletRecyclerAdapter extends RecyclerView.Adapter<ToiletRecyclerAd
 
                 toiletItem.like = !toiletItem.like;
             }
+        });
+        
+        // view 클릭시 이벤트 처리
+        holder.itemView.setOnClickListener(v->{
+            // 데이터만 전달하면 됨.
+
+
+
+            // 화면전환
+            Intent intent = new Intent(context, DetailActivity.class);
+            context.startActivity(intent);
+            //Toast.makeText(context, toiletItem.toiletNm, Toast.LENGTH_SHORT).show(); // 토스트로 클릭 테스트
         });
     }
 

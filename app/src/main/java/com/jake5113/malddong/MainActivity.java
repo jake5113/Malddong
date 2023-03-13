@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -34,6 +35,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Detail Activity 테스트 버튼
+//        findViewById(R.id.testbtn).setOnClickListener(v -> {
+//            Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
+//            startActivity(intent);
+//        });
+
         // JSON 파싱
         requestQueue = Volley.newRequestQueue(this);
         parseJSON();
@@ -41,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
 
         // 리스트 프레그먼트에 api로 불러온 값들 저장.
         listFragment = new ListFragment(items);
-
         mapFragment = new MapFragment();
         favoriteFragment = new FavoriteFragment();
 
@@ -103,6 +109,8 @@ public class MainActivity extends AppCompatActivity {
                                     continue;
                                 }
                             }
+                            // 쓰레드 작업이 끝난 후 notify()
+                            ((ListFragment)listFragment).adapter.notifyDataSetChanged();
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
                         }
