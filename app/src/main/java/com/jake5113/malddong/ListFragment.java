@@ -33,7 +33,7 @@ public class ListFragment extends Fragment {
     ArrayList<ToiletItem> items;
     RecyclerView recyclerView;
     ToiletRecyclerAdapter adapter;
-    ImageView ivFavorite, ivLoading;
+    ImageView ivFavorite;
 
     public ListFragment(ArrayList<ToiletItem> items) {
         this.items = items;
@@ -49,7 +49,6 @@ public class ListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ivFavorite = view.findViewById(R.id.iv_favorite);
         recyclerView = view.findViewById(R.id.recyclerview_list);
-        ivLoading = view.findViewById(R.id.iv_loading);
 
         //TODO : 이 부분 해결하기
         adapter = new ToiletRecyclerAdapter(getContext(), items);
@@ -58,12 +57,6 @@ public class ListFragment extends Fragment {
         Log.i("LISTFRAGMENT", "onViewCreated");
     }
 
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        ivLoading.setVisibility(View.GONE);
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
