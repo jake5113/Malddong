@@ -2,7 +2,8 @@ package com.jake5113.malddong;
 
 public class ToiletItem {
     boolean like = false; // 좋아요 클릭 값 저장
-    String photoYn, photo; // 사진 유무, 사진
+    String photoYn;// 사진 유무, 사진
+    String[] photo;
     String toiletNm, opnTimeInfo; // 화장실 명, 개방 시간 정보
     String rnAdres, lnmAdres; // 도로명 주소, 지번 주소
     String laCrdnt, loCrdnt; // 경도 위도
@@ -17,9 +18,36 @@ public class ToiletItem {
             femaleDspsnClosetCnt, // 여성 장애인 대변기 수
             femaleChildClosetCn; // 여성 어린이 대변기 수
 
-    public ToiletItem(String photo, String toiletNm, String rnAdres) {
+    public ToiletItem() {
+    }
+
+    public ToiletItem(String[] photo, String toiletNm, String rnAdres) {
         this.photo = photo;
         this.toiletNm = toiletNm;
         this.rnAdres = rnAdres;
+    }
+
+    public ToiletItem(boolean like, String photoYn, String[] photo, String toiletNm, String opnTimeInfo, String rnAdres, String lnmAdres, String laCrdnt, String loCrdnt, String mngrInsttNm, String telno, String toiletPosesnSeNm, String maleClosetCnt, String maleUrinalCnt, String maleDspsnClosetCnt, String maleDspsnUrinalCnt, String maleChildClosetCnt, String maleChildUrinalCnt, String femaleClosetCnt, String femaleDspsnClosetCnt, String femaleChildClosetCn) {
+        this.like = like;
+        this.photoYn = photoYn;
+        this.photo = photo;
+        this.toiletNm = toiletNm;
+        this.opnTimeInfo = opnTimeInfo;
+        this.rnAdres = rnAdres;
+        this.lnmAdres = lnmAdres;
+        this.laCrdnt = laCrdnt;
+        this.loCrdnt = loCrdnt;
+        this.mngrInsttNm = mngrInsttNm;
+        this.telno = telno;
+        this.toiletPosesnSeNm = toiletPosesnSeNm;
+        this.maleClosetCnt = maleClosetCnt;
+        this.maleUrinalCnt = maleUrinalCnt;
+        this.maleDspsnClosetCnt = maleDspsnClosetCnt;
+        this.maleDspsnUrinalCnt = maleDspsnUrinalCnt;
+        this.maleChildClosetCnt = maleChildClosetCnt;
+        this.maleChildUrinalCnt = maleChildUrinalCnt;
+        this.femaleClosetCnt = femaleClosetCnt;
+        this.femaleDspsnClosetCnt = femaleDspsnClosetCnt;
+        this.femaleChildClosetCn = femaleChildClosetCn;
     }
 }

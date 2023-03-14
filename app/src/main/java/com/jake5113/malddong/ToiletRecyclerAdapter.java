@@ -37,7 +37,6 @@ public class ToiletRecyclerAdapter extends RecyclerView.Adapter<ToiletRecyclerAd
 
     @NonNull
     @Override
-
     public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(context).inflate(R.layout.item_toilet, parent, false);
         return new VH(itemView);
@@ -47,11 +46,11 @@ public class ToiletRecyclerAdapter extends RecyclerView.Adapter<ToiletRecyclerAd
     public void onBindViewHolder(@NonNull VH holder, int position) {
 
         ToiletItem toiletItem = items.get(position);
-        Glide.with(context).load(toiletItem.photo).into(holder.ivImg);
+        Glide.with(context).load(toiletItem.photo[0]).into(holder.ivImg);
         holder.tvName.setText(toiletItem.toiletNm);
         holder.tvAddr.setText(toiletItem.rnAdres);
 
-        // 하트 눌러져 있는거 확인!!
+        // 하트 눌러져 있는거 확인 & 뷰 재사용시 다시 비어있는 하트로 설정!!
         toiletItem.like = checkIsLike(toiletItem.toiletNm, toiletItem.like);
         if (toiletItem.like) {
             holder.ivFavorite.setImageResource(R.drawable.baseline_favorite_24);
@@ -59,6 +58,7 @@ public class ToiletRecyclerAdapter extends RecyclerView.Adapter<ToiletRecyclerAd
             holder.ivFavorite.setImageResource(R.drawable.baseline_favorite_border_24);
         }
 
+        // 좋아요 버튼 클릭
         holder.ivFavorite.setOnClickListener(v -> {
             if (toiletItem.like) {
                 // 좋아요 해제
@@ -73,7 +73,7 @@ public class ToiletRecyclerAdapter extends RecyclerView.Adapter<ToiletRecyclerAd
                 holder.ivFavorite.setImageResource(R.drawable.baseline_favorite_24);
 
                 //DB에 저장
-                database.execSQL("INSERT INTO toilet (photo, toiletNm, rnAdres) VALUES ('" + toiletItem.photo + "','" + toiletItem.toiletNm + "','" + toiletItem.rnAdres + "')");
+                database.execSQL("INSERT INTO toilet (photo, toiletNm, rnAdres) VALUES ('" + toiletItem.photo[0] + "','" + toiletItem.toiletNm + "','" + toiletItem.rnAdres + "')");
 
                 toiletItem.like = !toiletItem.like;
             }

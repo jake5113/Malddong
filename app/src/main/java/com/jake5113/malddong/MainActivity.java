@@ -2,9 +2,7 @@ package com.jake5113.malddong;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -15,7 +13,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.tabs.TabLayout;
-import com.jake5113.malddong.databinding.FragmentListBinding;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -48,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
         // 리스트 프레그먼트에 api로 불러온 값들 저장.
         listFragment = new ListFragment(items);
-        mapFragment = new MapFragment();
+        mapFragment = new MyMapFragment();
         favoriteFragment = new FavoriteFragment();
 
         tabLayout = findViewById(R.id.tablayout);
@@ -95,6 +93,18 @@ public class MainActivity extends AppCompatActivity {
                             JSONObject jsonItemsObject = jsonMBodyObject.getJSONObject("items");
                             JSONArray jsonArray = jsonItemsObject.getJSONArray("item");
 
+                            Gson gson = new Gson();
+                            ToiletItem[] item = gson.fromJson(jsonArray.toString(), ToiletItem[].class);
+                            for (int i = 0; i < item.length; i++) {
+                                if(item[i].photoYn.equals("Y")) items.add(item[i]);
+                            }
+                            Log.i("LOOOOOG", item[0].photo.toString());
+                            //Json 작업 --> Gson
+/*                            JSONObject jsonResponseObject = response.getJSONObject("response");
+                            JSONObject jsonMBodyObject = jsonResponseObject.getJSONObject("body");
+                            JSONObject jsonItemsObject = jsonMBodyObject.getJSONObject("items");
+                            JSONArray jsonArray = jsonItemsObject.getJSONArray("item");
+
                             //if (items.size() == 0) { //괜찮은 코드인가?
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject item = jsonArray.getJSONObject(i);
@@ -102,15 +112,16 @@ public class MainActivity extends AppCompatActivity {
                                 String rnAdres = item.getString("rnAdres");
                                 try {
                                     if (item.getJSONArray("photo").getString(0) != null) {
-                                        String photo = item.getJSONArray("photo").getString(0);
+                                        String[] photo = new String[5];
+                                        photo[0] = item.getJSONArray("photo").getString(0);
                                         items.add(new ToiletItem(photo, toiletNm, rnAdres));
                                     }
                                 } catch (JSONException e) {
                                     continue;
                                 }
-                            }
+                            }*/
                             // 쓰레드 작업이 끝난 후 notify()
-                            ((ListFragment)listFragment).adapter.notifyDataSetChanged();
+                            ((ListFragment) listFragment).adapter.notifyDataSetChanged();
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
                         }

@@ -9,8 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -44,7 +42,7 @@ public class FavoriteRecyclerAdapter extends RecyclerView.Adapter<FavoriteRecycl
     @Override
     public void onBindViewHolder(@NonNull VH holder, int position) {
         ToiletItem toiletItem = items.get(position);
-        Glide.with(context).load(toiletItem.photo).into(holder.ivImg);
+        Glide.with(context).load(toiletItem.photo[0]).into(holder.ivImg);
         holder.tvName.setText(toiletItem.toiletNm);
         holder.tvAddr.setText(toiletItem.rnAdres);
 
@@ -58,7 +56,7 @@ public class FavoriteRecyclerAdapter extends RecyclerView.Adapter<FavoriteRecycl
             //TODO: Fragment refresh 가 필요함!
             favoriteFragment.adapter.notifyDataSetChanged();
 
-            if (favoriteFragment.favoriteItmes.size() == 0) {
+            if (favoriteFragment.favoriteItems.size() == 0) {
                 favoriteFragment.ivFavLoading.setVisibility(View.VISIBLE);
                 favoriteFragment.tvFavLoading.setVisibility(View.VISIBLE);
             }

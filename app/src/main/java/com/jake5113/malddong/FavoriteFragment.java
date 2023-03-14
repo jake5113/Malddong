@@ -20,9 +20,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class FavoriteFragment extends Fragment {
-    ArrayList<ToiletItem> favoriteItmes;
+    ArrayList<ToiletItem> favoriteItems;
     boolean like;
-    String photo;
     String toiletNm;
     String rnAdres;
     RecyclerView recyclerView;
@@ -39,10 +38,10 @@ public class FavoriteFragment extends Fragment {
         ivFavLoading = view.findViewById(R.id.iv_fav_loading);
         recyclerView = view.findViewById(R.id.recyclerview_favorite);
 
-        adapter = new FavoriteRecyclerAdapter(getActivity(), favoriteItmes, this);
+        adapter = new FavoriteRecyclerAdapter(getActivity(), favoriteItems, this);
         recyclerView.setAdapter(adapter);
 
-        if (favoriteItmes.size() != 0) {
+        if (favoriteItems.size() != 0) {
             ivFavLoading.setVisibility(View.GONE);
             tvFavLoading.setVisibility(View.GONE);
         }
@@ -52,7 +51,6 @@ public class FavoriteFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getData();
-
     }
 
     private void getData() {
@@ -67,14 +65,14 @@ public class FavoriteFragment extends Fragment {
         cursor.moveToFirst();
 
         //TODO 질문하기!!! 매우 안좋은 코드같다고 생각됨.
-        favoriteItmes = new ArrayList<>();
-
+        favoriteItems = new ArrayList<>();
         for (int i = 0; i < cnt; i++) {
-            photo = cursor.getString(1);
+            String[] photo = new String[3];
+            photo[0] = cursor.getString(1);
             toiletNm = cursor.getString(2);
             rnAdres = cursor.getString(3);
 
-            favoriteItmes.add(new ToiletItem(photo, toiletNm, rnAdres));
+            favoriteItems.add(new ToiletItem(photo, toiletNm, rnAdres));
             cursor.moveToNext();
         }
     }
