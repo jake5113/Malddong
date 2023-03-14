@@ -2,6 +2,7 @@ package com.jake5113.malddong;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +15,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
+import com.naver.maps.map.MapFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,9 +27,9 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity {
     ArrayList<ToiletItem> items = new ArrayList<>();
     RequestQueue requestQueue;
-    Fragment listFragment, mapFragment, favoriteFragment;
+    Fragment listFragment, favoriteFragment;
+    MyMapFragment myMapFragment;
     TabLayout tabLayout;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
         // 리스트 프레그먼트에 api로 불러온 값들 저장.
         listFragment = new ListFragment(items);
-        mapFragment = new MyMapFragment();
+        myMapFragment = new MyMapFragment();
         favoriteFragment = new FavoriteFragment();
 
         tabLayout = findViewById(R.id.tablayout);
@@ -63,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                 int pos = tab.getPosition();
 
                 if (pos == 0)
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_view, mapFragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_view, myMapFragment).commit();
                 else if (pos == 1)
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_view, listFragment).commit();
                 else if (pos == 2)

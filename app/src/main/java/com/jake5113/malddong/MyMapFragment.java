@@ -13,30 +13,33 @@ import android.view.ViewGroup;
 import com.jake5113.malddong.databinding.FragmentMyMapBinding;
 import com.naver.maps.geometry.LatLng;
 import com.naver.maps.geometry.LatLngBounds;
+import com.naver.maps.map.CameraUpdate;
 import com.naver.maps.map.MapFragment;
 import com.naver.maps.map.NaverMap;
 import com.naver.maps.map.OnMapReadyCallback;
+import com.naver.maps.map.overlay.InfoWindow;
 import com.naver.maps.map.overlay.Marker;
 
 public class MyMapFragment extends Fragment implements OnMapReadyCallback {
-
     FragmentMyMapBinding binding;
     FragmentManager fm;
+    MapFragment mapFragment;
+    Marker marker;
+    LatLng latLng;
+    InfoWindow infoWindow;
+    CameraUpdate cameraUpdate;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         fm = requireActivity().getSupportFragmentManager();
-        MapFragment mapFragment = (MapFragment) fm.findFragmentById(R.id.map);
-        if (mapFragment == null) {
-            mapFragment = MapFragment.newInstance();
-            fm.beginTransaction().add(R.id.map, mapFragment).commit();
-        }
+        mapFragment = (MapFragment) fm.findFragmentById(R.id.map);
+
+        mapFragment = MapFragment.newInstance();
+        fm.beginTransaction().add(R.id.map, mapFragment).commit();
 
         mapFragment.getMapAsync(this);
-
-
     }
 
     @Override
@@ -47,11 +50,21 @@ public class MyMapFragment extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(@NonNull NaverMap naverMap) {
-        Marker marker = new Marker();
-        marker.setPosition(new LatLng(37.5670135, 126.9783740));
-
-        // TODO 해야함
         naverMap.setExtent(new LatLngBounds(new LatLng(31.43, 122.37), new LatLng(44.35, 132)));
+        marker = new Marker();
+        latLng = new LatLng(33.485404, 126.481563);
+        infoWindow = new InfoWindow();
+        infoWindow.setAdapter(new InfoWindow.DefaultTextAdapter(requireContext()) {
+            @NonNull
+            @Override
+            public CharSequence getText(@NonNull InfoWindow infoWindow) {
+                return "내 위치";
+            }
+        });
+        marker.setPosition(latLng);
+        cameraUpdate = CameraUpdate.scrollTo(latLng);
+        naverMap.moveCamera(cameraUpdate);
         marker.setMap(naverMap);
+        infoWindow.open(marker);
     }
 }
