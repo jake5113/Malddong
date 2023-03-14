@@ -38,7 +38,8 @@ public class FavoriteFragment extends Fragment {
         tvFavLoading = view.findViewById(R.id.tv_fav_loading);
         ivFavLoading = view.findViewById(R.id.iv_fav_loading);
         recyclerView = view.findViewById(R.id.recyclerview_favorite);
-        adapter = new FavoriteRecyclerAdapter(getActivity(), favoriteItmes);
+
+        adapter = new FavoriteRecyclerAdapter(getActivity(), favoriteItmes, this);
         recyclerView.setAdapter(adapter);
 
         if (favoriteItmes.size() != 0) {
@@ -50,8 +51,8 @@ public class FavoriteFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         getData();
+
     }
 
     private void getData() {
@@ -77,7 +78,6 @@ public class FavoriteFragment extends Fragment {
             cursor.moveToNext();
         }
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
