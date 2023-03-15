@@ -1,6 +1,8 @@
 package com.jake5113.malddong;
 
-public class ToiletItem {
+import java.io.Serializable;
+
+public class ToiletItem implements Serializable{
     boolean like = false; // 좋아요 클릭 값 저장
     String photoYn;// 사진 유무, 사진
     String[] photo;
@@ -16,7 +18,7 @@ public class ToiletItem {
             maleChildUrinalCnt, // 남성 어린이 소변기 수
             femaleClosetCnt, // 여성 대변기 수
             femaleDspsnClosetCnt, // 여성 장애인 대변기 수
-            femaleChildClosetCn; // 여성 어린이 대변기 수
+            femaleChildClosetCnt; // 여성 어린이 대변기 수
 
     public ToiletItem() {
     }
@@ -27,7 +29,7 @@ public class ToiletItem {
         this.rnAdres = rnAdres;
     }
 
-    public ToiletItem(boolean like, String photoYn, String[] photo, String toiletNm, String opnTimeInfo, String rnAdres, String lnmAdres, String laCrdnt, String loCrdnt, String mngrInsttNm, String telno, String toiletPosesnSeNm, String maleClosetCnt, String maleUrinalCnt, String maleDspsnClosetCnt, String maleDspsnUrinalCnt, String maleChildClosetCnt, String maleChildUrinalCnt, String femaleClosetCnt, String femaleDspsnClosetCnt, String femaleChildClosetCn) {
+    public ToiletItem(boolean like, String photoYn, String[] photo, String toiletNm, String opnTimeInfo, String rnAdres, String lnmAdres, String laCrdnt, String loCrdnt, String mngrInsttNm, String telno, String toiletPosesnSeNm, String maleClosetCnt, String maleUrinalCnt, String maleDspsnClosetCnt, String maleDspsnUrinalCnt, String maleChildClosetCnt, String maleChildUrinalCnt, String femaleClosetCnt, String femaleDspsnClosetCnt, String femaleChildClosetCnt) {
         this.like = like;
         this.photoYn = photoYn;
         this.photo = photo;
@@ -48,6 +50,6 @@ public class ToiletItem {
         this.maleChildUrinalCnt = maleChildUrinalCnt;
         this.femaleClosetCnt = femaleClosetCnt;
         this.femaleDspsnClosetCnt = femaleDspsnClosetCnt;
-        this.femaleChildClosetCn = femaleChildClosetCn;
+        this.femaleChildClosetCnt = femaleChildClosetCnt;
     }
 }

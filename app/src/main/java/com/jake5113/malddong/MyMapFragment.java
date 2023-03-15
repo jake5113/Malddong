@@ -24,10 +24,6 @@ public class MyMapFragment extends Fragment implements OnMapReadyCallback {
     FragmentMyMapBinding binding;
     FragmentManager fm;
     MapFragment mapFragment;
-    Marker marker;
-    LatLng latLng;
-    InfoWindow infoWindow;
-    CameraUpdate cameraUpdate;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,10 +46,9 @@ public class MyMapFragment extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(@NonNull NaverMap naverMap) {
-        naverMap.setExtent(new LatLngBounds(new LatLng(31.43, 122.37), new LatLng(44.35, 132)));
-        marker = new Marker();
-        latLng = new LatLng(33.485404, 126.481563);
-        infoWindow = new InfoWindow();
+        Marker marker = new Marker();
+        LatLng latLng = new LatLng(33.485404, 126.481563);
+        InfoWindow infoWindow = new InfoWindow();
         infoWindow.setAdapter(new InfoWindow.DefaultTextAdapter(requireContext()) {
             @NonNull
             @Override
@@ -62,9 +57,10 @@ public class MyMapFragment extends Fragment implements OnMapReadyCallback {
             }
         });
         marker.setPosition(latLng);
-        cameraUpdate = CameraUpdate.scrollTo(latLng);
+        CameraUpdate cameraUpdate = CameraUpdate.scrollTo(latLng);
         naverMap.moveCamera(cameraUpdate);
         marker.setMap(naverMap);
+        naverMap.setExtent(new LatLngBounds(new LatLng(31.43, 122.37), new LatLng(44.35, 132)));
         infoWindow.open(marker);
     }
 }

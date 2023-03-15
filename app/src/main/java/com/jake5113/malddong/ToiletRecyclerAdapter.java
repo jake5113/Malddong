@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class ToiletRecyclerAdapter extends RecyclerView.Adapter<ToiletRecyclerAdapter.VH> {
@@ -83,10 +84,9 @@ public class ToiletRecyclerAdapter extends RecyclerView.Adapter<ToiletRecyclerAd
         holder.itemView.setOnClickListener(v->{
             // 데이터만 전달하면 됨.
 
-
-
             // 화면전환
             Intent intent = new Intent(context, DetailActivity.class);
+            intent.putExtra("toiletItem", (Serializable) toiletItem);
             context.startActivity(intent);
             //Toast.makeText(context, toiletItem.toiletNm, Toast.LENGTH_SHORT).show(); // 토스트로 클릭 테스트
         });

@@ -28,7 +28,7 @@
                     android:id="@+id/iv_toilet"
                     android:layout_width="wrap_content"
                     android:layout_height="230dp"
-                    android:scaleType="centerCrop"
+                    android:scaleType="centerInside"
                     android:src="@drawable/sample" />
 
                 <ImageButton
@@ -57,6 +57,7 @@
             android:layout_marginTop="8dp" />
 
         <TextView
+            android:id="@+id/toilet_nm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -66,6 +67,7 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/rn_adres"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -75,6 +77,7 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/lnm_adres"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -84,15 +87,27 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/mngr_instt_nm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="관리 기관 명 + 화장실 소유 구분 명"
+            android:text="관리 기관 명"
             android:textAlignment="textStart"
             android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/toilet_posesn_se_nm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="화장실 소유 구분 명"
+            android:textAlignment="textStart"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/telno"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -102,6 +117,7 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/male_closet_cnt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -111,6 +127,7 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/male_urinal_cnt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -120,6 +137,7 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/male_dspsn_closet_cnt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -129,6 +147,7 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/male_dspsn_urinal_cnt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -138,6 +157,7 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/male_child_closet_cnt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -147,6 +167,7 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/male_child_urinal_cnt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -156,6 +177,7 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/female_closet_cnt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -165,15 +187,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="여성 대변기 수"
-            android:textAlignment="textStart"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <TextView
+            android:id="@+id/female_dspsn_closet_cnt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -183,6 +197,7 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/female_child_closet_cnt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
