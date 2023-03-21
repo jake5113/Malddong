@@ -1,9 +1,11 @@
 package com.jake5113.malddong;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -22,24 +24,23 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     ArrayList<ToiletItem> items = new ArrayList<>();
+    HashSet<String> category = new HashSet<>();
+    ArrayList<String> sortedItems = new ArrayList<>();
     RequestQueue requestQueue;
     Fragment listFragment, favoriteFragment;
     MyMapFragment myMapFragment;
     TabLayout tabLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        // Detail Activity 테스트 버튼
-//        findViewById(R.id.testbtn).setOnClickListener(v -> {
-//            Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
-//            startActivity(intent);
-//        });
 
         // JSON 파싱
         requestQueue = Volley.newRequestQueue(this);
@@ -58,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         Objects.requireNonNull(tabLayout.getTabAt(1)).select();
 
         Log.i("MAINACTIVITY", "LISTFRAGMENT 생성후");
+
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -78,6 +80,23 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
+                // 동네이름 확인함!!
+       /*         int pos = tab.getPosition();
+
+                sortedItems.addAll(category);
+                Collections.sort(sortedItems);
+
+                if (pos == 1){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                    builder.setTitle("종류");
+                    String st = "";
+                    for (String st1 : sortedItems){
+                        st += st1 + "\n" ;
+                        builder.setMessage(st);
+                    }
+                    builder.create().show();
+                }*/
+
             }
         });
     }
@@ -98,11 +117,15 @@ public class MainActivity extends AppCompatActivity {
                             Gson gson = new Gson();
                             ToiletItem[] item = gson.fromJson(jsonArray.toString(), ToiletItem[].class);
                             for (int i = 0; i < item.length; i++) {
-                                if(item[i].photoYn.equals("Y")) items.add(item[i]);
+                                // 사진이 있을때만 리스트에 추가. 추후에 --> 대표 사진 이미지로 변경 예정
+                                if (item[i].photoYn.equals("Y")) {
+                                    items.add(item[i]);
+                                    category.add(item[i].emdNm);
+                                }
                             }
                             Log.i("LOOOOOG", item[0].photo.toString());
                             //Json 작업 --> Gson
-/*                            JSONObject jsonResponseObject = response.getJSONObject("response");
+/*                          JSONObject jsonResponseObject = response.getJSONObject("response");
                             JSONObject jsonMBodyObject = jsonResponseObject.getJSONObject("body");
                             JSONObject jsonItemsObject = jsonMBodyObject.getJSONObject("items");
                             JSONArray jsonArray = jsonItemsObject.getJSONArray("item");
@@ -124,6 +147,7 @@ public class MainActivity extends AppCompatActivity {
                             }*/
                             // 쓰레드 작업이 끝난 후 notify()
                             ((ListFragment) listFragment).adapter.notifyDataSetChanged();
+
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
                         }
