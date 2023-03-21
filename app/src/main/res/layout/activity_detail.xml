@@ -84,6 +84,15 @@
             android:textAlignment="textEnd"
             android:textSize="16sp"
             android:textStyle="bold" />
+        <TextView
+            android:id="@+id/opn_time_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="시간"
+            android:textAlignment="textEnd"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/mngr_instt_nm"

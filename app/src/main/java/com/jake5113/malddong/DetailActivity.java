@@ -49,6 +49,7 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         binding.toiletNm.setText(toiletNm);
         binding.rnAdres.setText(toiletItem.rnAdres);
         binding.lnmAdres.setText(toiletItem.lnmAdres);
+        binding.opnTimeInfo.setText(toiletItem.opnTimeInfo);
         binding.mngrInsttNm.setText("관리 기관:" + toiletItem.mngrInsttNm);
         binding.toiletPosesnSeNm.setText("화장실 소유:" + toiletItem.toiletPosesnSeNm);
         binding.telno.setText("전화번호:" + toiletItem.telno);
