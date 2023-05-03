@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         Log.i("MAINACTIVITY", "LISTFRAGMENT 생성전");
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_view, listFragment).commit();
-        Objects.requireNonNull(tabLayout.getTabAt(1)).select();
+        Objects.requireNonNull(tabLayout.getTabAt(0)).select();
 
         Log.i("MAINACTIVITY", "LISTFRAGMENT 생성후");
 
@@ -67,10 +67,8 @@ public class MainActivity extends AppCompatActivity {
                 int pos = tab.getPosition();
 
                 if (pos == 0)
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_view, myMapFragment).commit();
-                else if (pos == 1)
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_view, listFragment).commit();
-                else if (pos == 2)
+                else if (pos == 1)
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_view, favoriteFragment).commit();
             }
 

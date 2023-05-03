@@ -26,7 +26,7 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
     ActivityDetailBinding binding;
     LatLng latLng;
     String toiletNm = null;
-
+    MapFragment mapFragment;
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +35,7 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         setContentView(binding.getRoot());
 
         FragmentManager fm = getSupportFragmentManager();
-        MapFragment mapFragment = (MapFragment) fm.findFragmentById(R.id.detail_map);
+        mapFragment = (MapFragment) fm.findFragmentById(R.id.detail_map);
 
         mapFragment = MapFragment.newInstance();
         fm.beginTransaction().replace(R.id.detail_map, mapFragment).commit();
